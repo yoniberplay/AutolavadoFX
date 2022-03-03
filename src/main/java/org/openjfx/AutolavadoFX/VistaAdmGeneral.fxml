@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="1262.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorAdmGeneral">
+   <tabs>
+      <Tab text="Contabilidad">
+         <content>
+            <fx:include fx:id="VistaPrecios" source="VistaPrecios.fxml" />
+         </content>
+      </Tab>
+      <Tab text="Lavadores">
+         <content>
+            <fx:include fx:id="VistaAdminLavadores" source="VistaAdministrarLavadores.fxml" />
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

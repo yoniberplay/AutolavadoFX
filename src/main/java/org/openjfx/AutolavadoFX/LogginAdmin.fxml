@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#Enter" prefHeight="235.0" prefWidth="414.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.Controladorlogginadm">
+   <children>
+      <Label fx:id="mensajelabel" alignment="TOP_CENTER" layoutX="8.0" layoutY="14.0" prefHeight="35.0" prefWidth="388.0" text="Clave de administracion.">
+         <font>
+            <Font name="Cambria Bold" size="29.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtclave" layoutX="109.0" layoutY="105.0" prefHeight="25.0" prefWidth="197.0" />
+      <Button fx:id="btniniciar" layoutX="139.0" layoutY="148.0" mnemonicParsing="false" onAction="#accioninicio" prefHeight="25.0" prefWidth="136.0" text="Iniciar" />
+      <Button fx:id="btncancelar" layoutX="140.0" layoutY="184.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="25.0" prefWidth="136.0" text="Cancelar" />
+      <TextField fx:id="admin" editable="false" layoutX="109.0" layoutY="66.0" prefHeight="25.0" prefWidth="197.0" text="ADMINISTRADOR" />
+   </children>
+</AnchorPane>

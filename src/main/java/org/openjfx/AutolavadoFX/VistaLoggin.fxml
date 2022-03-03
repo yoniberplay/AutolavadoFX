@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#Enter" onMouseDragged="#Mousearrastrado" onMousePressed="#Mousepresionado" onMouseReleased="#MouseSuelto" prefHeight="601.0" prefWidth="1262.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorLoggin">
+   <children>
+      <ImageView fitHeight="607.0" fitWidth="1280.0" layoutX="-30.0" layoutY="-2.0" opacity="0.79">
+         <image>
+            <Image url="@fondo.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="780.0" layoutY="16.0" opacity="0.9" prefHeight="557.0" prefWidth="457.0" style="-fx-background-color: #330000;">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="140.0" lineSpacing="19.0" prefHeight="34.0" prefWidth="172.0" text="Usuario" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtusuario" layoutX="113.0" layoutY="182.0" prefHeight="34.0" prefWidth="253.0" promptText="Usuario" style="-fx-border-color: #e1e1e1;">
+               <font>
+                  <Font name="Arial Black" size="14.0" />
+               </font></TextField>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="230.0" prefHeight="34.0" prefWidth="172.0" text="Contraseña" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="18.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="txtpasswd" layoutX="113.0" layoutY="272.0" prefHeight="34.0" prefWidth="253.0" promptText="Clave" style="-fx-border-color: #e1e1e1;">
+               <font>
+                  <Font name="Arial Black" size="14.0" />
+               </font>
+            </PasswordField>
+            <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="76.0" layoutY="212.0" size="38" />
+            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="79.0" layoutY="306.0" size="38" />
+            <FontAwesomeIconView fill="WHITE" glyphName="SIGN_IN" layoutX="334.0" layoutY="383.0" size="38" />
+            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" layoutX="336.0" layoutY="453.0" size="38" />
+            <FontAwesomeIconView fill="WHITE" glyphName="USER_CIRCLE" layoutX="176.0" layoutY="116.0" size="100" wrappingWidth="105.0" />
+            <JFXButton fx:id="btninicio2" layoutX="131.0" layoutY="350.0" onAction="#BotonInicio" prefHeight="38.0" prefWidth="197.0" ripplerFill="WHITE" style="-fx-border-color: FFFFFF;" text="Iniciar sesión" textFill="#fff9f9">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnsalir" layoutX="130.0" layoutY="417.0" onAction="#salir" prefHeight="38.0" prefWidth="197.0" ripplerFill="WHITE" style="-fx-border-color: FFFFFF;" text="Salir" textFill="#fff9f9">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

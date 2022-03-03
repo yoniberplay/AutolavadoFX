@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="VistaAdminLavadores" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="1262.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorAdministrarLavadores">
+   <children>
+      <TableView fx:id="tabla" editable="true" layoutX="362.0" layoutY="65.0" prefHeight="415.0" prefWidth="533.0">
+         <columns>
+            <TableColumn fx:id="col_nombre" prefWidth="96.0" text="Nombre" />
+            <TableColumn fx:id="col_apellido" prefWidth="110.0" text="Apellido" />
+            <TableColumn fx:id="col_codigo" prefWidth="51.0" text="Codigo" />
+            <TableColumn fx:id="col_fechaentrada" prefWidth="101.0" text="Fecha de entrada" />
+            <TableColumn fx:id="col_cedula" prefWidth="104.0" text="Cedula" />
+            <TableColumn fx:id="col_porcentaje" prefWidth="70.0" text="Porcentaje" />
+         </columns>
+      </TableView>
+      <JFXButton focusTraversable="false" layoutX="537.0" layoutY="497.0" onAction="#EliminarLavador" prefHeight="31.0" prefWidth="144.0" style="-fx-border-color: GRAY; -fx-background-color: White;" text="Eliminar Seleccionado" textOverrun="CLIP">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="14.0" layoutY="23.0" text="Agregar Lavador">
+         <font>
+            <Font name="Cambria Bold" size="29.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtnombre" layoutX="136.0" layoutY="79.0" promptText="Introduce Nombre" />
+      <TextField fx:id="txtapellido" layoutX="136.0" layoutY="108.0" promptText="Introduce Apellido" />
+      <TextField fx:id="txtdecula" layoutX="136.0" layoutY="138.0" promptText="Introduce Cedula" />
+      <TextField fx:id="txtganaciaLavador" layoutX="136.0" layoutY="168.0" promptText="Porcentaje por vehiculo Lavado" />
+      <Label layoutX="14.0" layoutY="75.0" text="Nombre:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="105.0" text="Apellido:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="135.0" text="Cedula:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="67.0" layoutY="231.0" onAction="#Agregar_lavador" prefHeight="42.0" prefWidth="138.0" style="-fx-border-color: GREY;" text="Agregar">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="362.0" layoutY="23.0" text="Lista de Lavadores" underline="true">
+         <font>
+            <Font name="Cambria Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="165.0" text="Ganancia%">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton focusTraversable="false" layoutX="971.0" layoutY="236.0" onAction="#ModificarEmpleado" prefHeight="32.0" prefWidth="183.0" style="-fx-border-color: GRAY; -fx-background-color: White;" text="Modificar Seleccionado" textOverrun="CLIP">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="940.0" layoutY="23.0" text="Modificar Lavador">
+         <font>
+            <Font name="Cambria Bold" size="29.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtmodificarnombre" layoutX="1063.0" layoutY="82.0" promptText="Introduce Nombre" />
+      <TextField fx:id="txtmodificarapellido" layoutX="1063.0" layoutY="111.0" promptText="Introduce Apellido" />
+      <TextField fx:id="txtmodificarcedula" layoutX="1063.0" layoutY="141.0" promptText="Introduce Cedula" />
+      <TextField fx:id="txtmodificarganancia" layoutX="1063.0" layoutY="171.0" promptText="Porcentaje por vehiculo Lavado" />
+      <Label layoutX="941.0" layoutY="78.0" text="Nombre:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="940.0" layoutY="106.0" text="Apellido:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="940.0" layoutY="138.0" text="Cedula:">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="940.0" layoutY="168.0" text="Ganancia%">
+         <font>
+            <Font name="Cambria Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
