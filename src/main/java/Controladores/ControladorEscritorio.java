@@ -9,16 +9,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
 
 import org.openjfx.AutolavadoFX.Reloj;
 import org.openjfx.AutolavadoFX.lavados_diarios;
 
+import Modelo.FacturaLavador;
 import Modelo.ModeloConexion;
 import Modelo.ModeloInsertaLavado;
 import Modelo.ModeloLogginAdm;
 import Modelo.PreciosModelo;
+import Modelo.ModeloImpresion;
 import VentaEmergenteJFX.VentanaEmergente;
 import VentaEmergenteJFX.VentanaSalir;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -155,23 +167,7 @@ public class ControladorEscritorio implements Initializable {
 
 	}
 
-	@FXML
-	void Accionimprimir(ActionEvent event) {
-		if (VerificarOtro()) {
-			Detalles_Lavado();
-			mostrandolavadosdiarios();
-			System.out.println(ControladorLoggin.nombre_usuario);
-		}else if (Lotro.isSelected()==false) {
-			Detalles_Lavado();
-			mostrandolavadosdiarios();
-			System.out.println(ControladorLoggin.nombre_usuario);
-		}
-		else {
-			VentanaEmergente.AvisoEmergente("El precio del tipo de lavado debe ser numerico.");
-		}
-		
-		
-	}
+	
 
 	@FXML
 	void Cerrar(MouseEvent event) {
@@ -213,7 +209,6 @@ public class ControladorEscritorio implements Initializable {
 		Rjeep.setToggleGroup(tipovehiculo);
 		Rmotor.setToggleGroup(tipovehiculo);
 		Rcamion.setToggleGroup(tipovehiculo);
-		// Rotro.setToggleGroup(tipovehiculo);
 		mostrandolavadosdiarios();
 		new Reloj(lblreloj);
 		
@@ -418,11 +413,12 @@ public class ControladorEscritorio implements Initializable {
 		
 		if (Marca != null && (codigolavador!=null) && !(cantidadlavados.isEmpty()) && !(placa.isEmpty()) ) {
 
-			int total = GestionaTotal(vehiculo);
-
-			objlavado = new lavados_diarios(vehiculo, Marca.toUpperCase(), codigolavador, cantidadlavados, total, "",
+			Double total = GestionaTotal(vehiculo);
+			objlavado = new lavados_diarios(vehiculo, Marca.toUpperCase(), codigolavador, cantidadlavados, total.intValue(), "",
 					placa);
 			new ModeloInsertaLavado(objlavado);
+			
+			Impresora(placa.toUpperCase(),vehiculo, descripcionimpresora(arraylavado), ControladorLoggin.nombre_usuario, total,codigolavador);
 
 			// Botones y Text a su valor inical
 			Rcarro.setSelected(true);
@@ -438,9 +434,9 @@ public class ControladorEscritorio implements Initializable {
 
 	}
 
-	int GestionaTotal(String VEHICULO) {
+	Double GestionaTotal(String VEHICULO) {
 
-		int total = 0;
+		Double total = 00.0;
 		PreciosModelo precios = obtenerprecios(VEHICULO);
 		int sencillo = precios.getSencillo();
 		int interior = precios.getInterior();
@@ -463,6 +459,8 @@ public class ControladorEscritorio implements Initializable {
 			}
 			if (Lotro.isSelected()) {
 				total += Integer.parseInt(txtpreciootro.getText());
+				System.out.println(Integer.parseInt(txtpreciootro.getText()));
+				
 			}
 			break;
 		}
@@ -631,12 +629,142 @@ public class ControladorEscritorio implements Initializable {
 				Integer.parseInt(txtpreciootro.getText());
 				cond = true;
 			} catch (Exception e) {
-				cond = false;
 			}
 		}
 		
 		return cond;
 		
+	}
+	
+	@FXML
+	void Accionimprimir(ActionEvent event) {
+		
+		if (VerificarOtro()) {
+			Detalles_Lavado();
+			mostrandolavadosdiarios();
+		}else if (Lotro.isSelected()==false) {
+			Detalles_Lavado();
+			mostrandolavadosdiarios();
+		}
+		else {
+			VentanaEmergente.AvisoEmergente("El precio del tipo de lavado debe ser numerico.");
+		}
+		
+		
+	}
+	
+	void Impresora(String placa,String Vehiculo,String descripcion,String cajero ,double monto,String codlavador) {
+		
+		 String hora = new SimpleDateFormat("hh:mm:ss").format(Calendar.getInstance().getTime());
+		 String fecha = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
+		 //StringBuilder builder = new StringBuilder("             YONBER CARWASH\r\n");
+		 StringBuilder builder = new StringBuilder("");
+		 int cantd =1;
+		 ModeloImpresion impresion = new ModeloImpresion(String.valueOf(cantd) , descripcion, cajero);
+		
+			// Message
+		 	builder.append("   AV Hermanas Mirabal 101, Villa Mella\r\n");
+		 	builder.append("            Santo Domingo Norte\r\n");
+		 	builder.append("                829-988-4791\r\n");
+		    builder.append("Fecha: "+fecha+"\r\n");
+		    builder.append("Hora:  "+hora+"\r\n");
+		    builder.append("Lavador No. "+codlavador+"\r\n");
+		    builder.append("Placa: "+placa+"\r\n");
+		    builder.append("Vehiculo: "+Vehiculo+"\r\n");
+		    builder.append("------------------------------------------\r\n");
+		    builder.append("CANT  DESCRIPCION               MONTO\r\n");
+		    builder.append("------------------------------------------\r\n");
+			builder.append(impresion.getCantidad()).append("").append(impresion.getDescripcion()).append("$").append(monto).append("\r\n");
+			builder.append("\r\n");
+			builder.append("------------------------------------------\r\n");
+			builder.append("Total a pagar:                  $"+monto).append("\r\n");
+			builder.append("------------------------------------------\r\n");
+			builder.append("------------------------------------------\r\n");
+			builder.append("Gracias por confiar en las mejores manos.\r\n");
+			builder.append("Cajer@ "+cajero+" \r\n");
+			builder.append(" \r\n");
+			builder.append(" \r\n");
+			builder.append(" \r\n");
+			builder.append(" \r\n");
+			
+			//CORTAR EL PAPEL
+			char[] ESC_CUT_PAPER = new char[]{0x1B, 'm'};
+			builder.append(ESC_CUT_PAPER);
+			
+		String texto = builder.toString(); 
+		System.out.println(texto);
+		PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+		DocPrintJob docPrintJob = printService.createPrintJob();
+		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+		Doc doc = new SimpleDoc(texto.getBytes(), flavor, null);
+		try {
+			docPrintJob.print(doc, null);
+			Facturalavador();
+		} catch (PrintException e) {
+			e.printStackTrace();
+		}
+	}
+	private String descripcionimpresora(CheckBox[] tipolavado) {
+		String lavado = "";
+			for (CheckBox a : tipolavado) {
+				if (a.isSelected()) {
+					lavado += a.getText().substring(0,4) + " ";
+				}
+			}
+			return lavado;
+		}
+	
+	private void Facturalavador() {
+		String sql = "CALL PROC_ultimolavado()";
+		FacturaLavador fact = null;
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				fact = new FacturaLavador(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getString(7));
+			}
+			ImprimeFacturalavador(fact);
+			
+		} catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		
+	}
+	private void ImprimeFacturalavador(FacturaLavador fact) {
+		// Message
+		StringBuilder builder = new StringBuilder("");
+	    builder.append("------------------------------------------\r\n");
+	    builder.append("DETALLES LAVADO\r\n");
+	    builder.append("------------------------------------------\r\n");
+		builder.append("Factura No. "+fact.getId()+"\r\n");
+		builder.append("Lavador: "+fact.getNombre()+" "+fact.getApellido()+"\r\n");
+		builder.append("Lavador No. "+fact.getCodigo()+"\r\n");
+		builder.append("Marca: "+fact.getMarca()+"\r\n");
+		builder.append("Lavados: "+fact.getTiposlavados()+"\r\n");
+		builder.append("------------------------------------------\r\n");
+		builder.append("Total a pagado:                  $"+fact.getTotal()).append("\r\n");
+		builder.append("------------------------------------------\r\n");
+		builder.append(" \r\n");
+		builder.append(" \r\n");
+		builder.append(" \r\n");
+		builder.append(" \r\n");
+		
+		//CORTAR EL PAPEL
+		char[] ESC_CUT_PAPER = new char[]{0x1B, 'm'};
+		builder.append(ESC_CUT_PAPER);
+		
+	String texto = builder.toString(); 
+	System.out.println(texto);
+	PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+	DocPrintJob docPrintJob = printService.createPrintJob();
+	DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+	Doc doc = new SimpleDoc(texto.getBytes(), flavor, null);
+	try {
+		docPrintJob.print(doc, null);
+	} catch (PrintException e) {
+		e.printStackTrace();
+	}
 	}
 
 }

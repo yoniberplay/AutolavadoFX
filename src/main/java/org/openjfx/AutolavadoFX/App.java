@@ -2,8 +2,6 @@ package org.openjfx.AutolavadoFX;
 
 import java.io.IOException;
 import java.sql.Connection;
-
-import Modelo.ModeloAdminstracion;
 import Modelo.ModeloConexion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -40,8 +38,6 @@ public class App extends Application {
 				primaryStage.setScene(scene);
 				primaryStage.initStyle(StageStyle.UNDECORATED);
 				primaryStage.show();
-				//new ModeloAdminstracion();
-				//new ModeloEscritorio();
 				
 			} catch (IOException e) {
 				System.out.println(e.getMessage());

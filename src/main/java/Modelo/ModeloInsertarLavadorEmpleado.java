@@ -8,14 +8,15 @@ import java.sql.SQLException;
 public class ModeloInsertarLavadorEmpleado {
 
 	
-	private String nombre, apellido,porcentaje ;
+	private String nombre, apellido ;
 	private ModeloConexion conexion;    
 	private Connection con;
+	private double porcentaje;
 	
 	private String insertasql = "INSERT INTO empleados_lavadores(Nombre, Apellido,Cedula,Fecha,GananciaXVehiculo) VALUES (?,?,?,NOW(),?)";
 	
 	
-	public ModeloInsertarLavadorEmpleado(String nombre, String apellido,String cedula,String porcentaje) {
+	public ModeloInsertarLavadorEmpleado(String nombre, String apellido,String cedula,double porcentaje) {
 		conexion = new ModeloConexion();
 		con = conexion.getConexion();
 		this.nombre=nombre;
@@ -27,7 +28,7 @@ public class ModeloInsertarLavadorEmpleado {
 			sentencia.setString(1, nombre);
 			sentencia.setString(2, apellido);
 			sentencia.setString(3, cedula);
-			sentencia.setString(4, porcentaje);
+			sentencia.setString(4, String.valueOf(porcentaje));
 			sentencia.executeUpdate();
 			con.close();
 			sentencia.close();
@@ -40,7 +41,7 @@ public class ModeloInsertarLavadorEmpleado {
 	
 	//Actualizar datos de un empleado
 	private String actualizasql = "UPDATE empleados_lavadores set Nombre=?,Apellido=?,Cedula=?,GananciaXVehiculo=? where codigo=?";
-	public ModeloInsertarLavadorEmpleado(String nombre, String apellido,String cedula,String porcentaje,int codigo) {
+	public ModeloInsertarLavadorEmpleado(String nombre, String apellido,String cedula,double porcentaje,int codigo) {
 		conexion = new ModeloConexion();
 		con = conexion.getConexion();
 		this.nombre=nombre;
@@ -52,7 +53,7 @@ public class ModeloInsertarLavadorEmpleado {
 			sentencia.setString(1, nombre);
 			sentencia.setString(2, apellido);
 			sentencia.setString(3, cedula);
-			sentencia.setString(4, porcentaje);
+			sentencia.setString(4, String.valueOf(porcentaje));
 			sentencia.setInt(5, codigo);
 			sentencia.executeUpdate();
 			con.close();

@@ -1,6 +1,5 @@
 package Controladores;
 
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-
+import Modelo.DatosEstaticos;
 import Modelo.ModeloConexion;
 import Modelo.ModeloDatosLavador;
-import Modelo.ModeloInsertarLavadorEmpleado;
+import Modelo.ModeloModificarlavadores;
 import VentaEmergenteJFX.VentanaEmergente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
@@ -40,7 +38,7 @@ public class ControladorAdministrarLavadores implements Initializable{
     private AnchorPane VistaAdminLavadores;
 
     @FXML
-    private TableView<ModeloDatosLavador> tabla;
+    public TableView<ModeloDatosLavador> tabla;
 
     @FXML
     private TableColumn<ModeloDatosLavador, String> col_nombre;
@@ -60,34 +58,12 @@ public class ControladorAdministrarLavadores implements Initializable{
     @FXML
     private TableColumn<ModeloDatosLavador, String> col_porcentaje;
 
-    @FXML
-    private TextField txtnombre;
-
-    @FXML
-    private TextField txtapellido;
-    
-    @FXML
-    private TextField txtdecula;
-    
-    @FXML
-    private TextField txtganaciaLavador;
-    
-    
-    @FXML
-    private TextField txtmodificarnombre;
-
-    @FXML
-    private TextField txtmodificarapellido;
-
-    @FXML
-    private TextField txtmodificarcedula;
-
-    @FXML
-    private TextField txtmodificarganancia;
 
     @FXML
     void Agregar_lavador(ActionEvent event) {
-    	String name = txtnombre.getText();
+    	new ModeloModificarlavadores("Agregar Lavador");
+    	MostrarTabla();
+    	/*String name = txtnombre.getText();
     	String last_name = txtapellido.getText();
     	String cedula = txtdecula.getText();
     	String porcentaje = txtganaciaLavador.getText();
@@ -102,13 +78,28 @@ public class ControladorAdministrarLavadores implements Initializable{
 			MostrarTabla();
 		}else {
 		VentanaEmergente.AvisoEmergente("Debe rellenar todos los campos.");
-		}
+		}*/
     }
     
     @FXML
     void ModificarEmpleado(ActionEvent event) {
-    	try {
-    		ModeloDatosLavador temp = tabla.getSelectionModel().getSelectedItem();
+    	
+    	ModeloDatosLavador temp = tabla.getSelectionModel().getSelectedItem();
+    	if (temp!=null) {
+    		DatosEstaticos.nombre=temp.getNombre();
+        	DatosEstaticos.apellido=temp.getApellido();
+        	DatosEstaticos.cedula = temp.getCedula();
+        	DatosEstaticos.porcentaje = temp.getPorcentaje();
+        	DatosEstaticos.codigo = Integer.parseInt(temp.getCodigo());
+        	DatosEstaticos.cond = true;
+        	
+        	new ModeloModificarlavadores("Modificar Datos del lavador.");
+        	MostrarTabla();
+		}else {VentanaEmergente.AvisoEmergente("NO HA SELECCIONADO NINGUN EMPLEADO.");}
+    	
+    	
+    	/*try {
+    		//ModeloDatosLavador temp = tabla.getSelectionModel().getSelectedItem();
     		if (temp!=null) {
     			String name = txtmodificarnombre.getText();
     	    	String last_name = txtmodificarapellido.getText();
@@ -127,7 +118,7 @@ public class ControladorAdministrarLavadores implements Initializable{
 			}else {VentanaEmergente.AvisoEmergente("NO HA SELECCIONADO NINGUN EMPLEADO.");}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}
+		}*/
     	
     }
 
@@ -181,10 +172,7 @@ public class ControladorAdministrarLavadores implements Initializable{
 		
 		if (tabla.getSelectionModel().getSelectedIndex()!=-1) {
 			ModeloDatosLavador datos =  (ModeloDatosLavador) tabla.getSelectionModel().getSelectedItems().get(0);
-			
-			//String insertasql = "DELETE FROM empleados_lavadores where Codigo=?";
 			String deletesql = "CALL PROC_DELETEempleados_lavadores(?)";
-			
 			try {
 				PreparedStatement sentencia = con.prepareStatement(deletesql);
 				sentencia.setString(1, datos.getCodigo());
@@ -194,7 +182,7 @@ public class ControladorAdministrarLavadores implements Initializable{
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-		}
+		}else {VentanaEmergente.AvisoEmergente("NO HA SELECCIONADO NINGUN EMPLEADO.");}
     }
 	
 

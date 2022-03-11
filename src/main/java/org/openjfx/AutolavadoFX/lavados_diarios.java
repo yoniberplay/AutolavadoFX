@@ -5,16 +5,6 @@ public class lavados_diarios {
 	private String Vehiculo,Marca,Lavador,fecha,Tipo_lavado,Placa;
 	private int total;
 
-	
-	/*public lavados_diarios(String vehiculo, String marca, String lavador, String total,
-			String fecha) {
-		Vehiculo = vehiculo;
-		Marca = marca;
-		Lavador = lavador;
-		this.total = total;
-		this.fecha = fecha;
-		//this.Tipo_lavado=Tipo_lavado;
-	}*/
 	public lavados_diarios(String vehiculo, String marca, String lavador,String Tipo_lavado, int total,
 			String fecha,String placa) {
 		Vehiculo = vehiculo;
